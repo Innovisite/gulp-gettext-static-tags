@@ -16,7 +16,7 @@ function getParsedPO(filename) {
     return PO.parse(content.toString());    
 }
 
-function gulpTranslate(poFile) {
+function gulpTranslate(poFile, tokStart, tokEnd) {
     var language = path.basename(poFile, '.po');      
     var parsedPoFile = getParsedPO(poFile);
     var items = parsedPoFile.items;
@@ -29,8 +29,8 @@ function gulpTranslate(poFile) {
 
 	var src = file.contents.toString();
 	var dst = '';		
-	var TOKEN_START = "@<<";
-	var TOKEN_END = ">>@";
+	var TOKEN_START = tokStart !== undefined ? tokStart : "@<<";
+	var TOKEN_END = tokEnd !== undefined ? tokEnd : ">>@";
 	var TOKEN_LENGTH = TOKEN_START.length;
 	var lastIndex = 0;
 	var finished = false;
